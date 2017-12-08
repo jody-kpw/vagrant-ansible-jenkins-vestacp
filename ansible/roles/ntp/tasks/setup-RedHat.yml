@@ -1,0 +1,64 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "main.yml"
+
+- name: Ensure NTP-related packages are installed.
+  package:
+    name: ntp
+    state: present
+
+- name: Ensure tzdata package is installed (Linux).
+  package:
+    name: tzdata
+    state: present
+  when: ansible_system == "Linux"
+
+- name: Set timezone {{ global_timezone }}
+  timezone:
+    name: "{{ global_timezone }}"
+
+- name: "Set Crontab Synchronizing time with NTP update and hwclock"
+  shell: |
+    if ! grep -q "ntpdate -u" /etc/crontab; then
+       echo "{{ ntpdate_crobtab }}" >> /etc/crontab
+    fi
+  register: command_result
+
+- name: Ansible shell register result
+  debug: msg="{{ command_result.stdout }}"
+
+- name: grep /etc/crobtab ntpdate
+  command: grep ntpdate /etc/crontab
+  register: command_result
+
+- debug: msg="{{ command_result.stdout }}"
+
+- name: Make sure NTP is stopped
+  service: name=ntpd state=stopped enabled=yes
+  tags: ntp
+
+- name: Ensure NTP is running and enabled as configured.
+  service:
+    name: "{{ ntp_daemon }}"
+    state: started
+    enabled: yes
+
+- name: Sync hwclock
+  shell: hwclock -w
+  tags: ntp
+
+- name: restart ntpd
+  service: name=ntpd state=restarted
+
+- name: Ansible shell register result
+  command: date -R
+  register: command_result
+
+- debug: msg="{{ command_result.stdout }}"
+
+- name: Generate ntp.conf file
+  template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+  notify: restart ntp
+  when: ntp_manage_config

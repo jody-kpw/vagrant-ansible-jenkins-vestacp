@@ -1,0 +1,16 @@
+---
+- name: Stop firwalld service
+  command: systemctl stop firewalld.service
+  when: firewalld_disable
+
+- name: Disable firwalld service
+  command: systemctl disable firewalld.service
+  when: firewalld_disable
+
+- name: Start firwalld service
+  command: systemctl start firewalld.service
+  when: not firewalld_disable
+
+- name: Enable firwalld service
+  command: systemctl enable firewalld.service
+  when: not firewalld_disable

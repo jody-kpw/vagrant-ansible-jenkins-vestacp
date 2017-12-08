@@ -1,0 +1,21 @@
+---
+# List of Supported Timezones
+# http://php.net/manual/en/timezones.php
+global_timezone: Asia/Hong_Kong
+
+# Roles: ntp
+# Set to true to use the ntp.conf template
+ntp_manage_config: true
+
+# NTP server configuration.
+# See: The pool.ntp.org project is a big virtual cluster of
+# timeservers providing reliable easy to use NTP service.
+ntp_area_0: 'hk.pool.ntp.org'
+ntp_area_1: 'asia.pool.ntp.org'
+ntp_area_2: 'asia.pool.ntp.org'
+ntp_area_3: 'asia.pool.ntp.org'
+ntp_servers:
+  - "0.{{ ntp_area_0 }} iburst"
+  - "1.{{ ntp_area_1 }} iburst"
+  - "2.{{ ntp_area_2 }} iburst"
+  - "3.{{ ntp_area_3 }} iburst"

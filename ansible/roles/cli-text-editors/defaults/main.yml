@@ -1,0 +1,6 @@
+---
+# Set to true to install the packages.
+nano_enabled: false
+vim_enabled: false
+mc_enabled: false
+emacs_enabled: false

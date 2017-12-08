@@ -1,0 +1,8 @@
+---
+# Wget is a network utility to retrieve files from
+# the Web using http and ftp, the two most widely used Internet protocols.
+- name: Install wget
+  yum:
+    name: wget
+    state: present
+  when: wget_enabled

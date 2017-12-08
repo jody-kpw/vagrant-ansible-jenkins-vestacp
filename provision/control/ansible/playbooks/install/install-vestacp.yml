@@ -1,0 +1,17 @@
+---
+- hosts: dev
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: download vesta CP installer
+      get_url: url=http://vestacp.com/pub/vst-install.sh dest=/tmp/vst-install.sh mode=0755
+    - name: run the installer
+      shell: >
+          yes | bash /tmp/vst-install.sh --nginx yes --apache no --phpfpm yes
+          --vsftpd yes --proftpd no --exim yes --dovecot yes --spamassassin yes
+          --clamav yes --named yes --iptables yes --fail2ban yes --mysql yes
+          --postgresql no --remi yes --quota no
+          --email admin@localhost.com
+          --password admin
+      args:
+        creates: /root/.vestainstalled

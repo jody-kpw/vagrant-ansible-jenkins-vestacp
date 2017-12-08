@@ -1,0 +1,197 @@
+---
+# List of Supported Timezones
+# http://php.net/manual/en/timezones.php
+global_timezone: Asia/Hong_Kong
+
+# Roles: ntp
+# Set to true to use the ntp.conf template
+ntp_manage_config: true
+
+# NTP server configuration.
+# See: The pool.ntp.org project is a big virtual cluster of
+# timeservers providing reliable easy to use NTP service.
+ntp_area_0: 'hk.pool.ntp.org'
+ntp_area_1: 'asia.pool.ntp.org'
+ntp_area_2: 'asia.pool.ntp.org'
+ntp_area_3: 'asia.pool.ntp.org'
+ntp_servers:
+  - "0.{{ ntp_area_0 }} iburst"
+  - "1.{{ ntp_area_1 }} iburst"
+  - "2.{{ ntp_area_2 }} iburst"
+  - "3.{{ ntp_area_3 }} iburst"
+
+
+# Roles: firewalld tools
+# FirewallD is a firewall management tool available by default on CentOS 7 servers.
+# Set to true disable, false to enable.
+firewalld_disable: true
+
+# Roles: selinux
+# selinux - Change policy and state of SELinux
+# http://docs.ansible.com/ansible/latest/selinux_module.html
+
+# Configures the SELinux mode and policy.
+# A reboot may be required after usage.
+# Ansible will not issue this reboot but will let you know when it is required.
+
+# SELinux is a security extension of CentOS that should provide extended security.
+# In my opinion you don't need it to configure a secure system,
+# and it usually causes more problems than advantages
+# (think of it after you have done a week of trouble-shooting
+# because some service wasn't working as expected,
+# and then you find out that everything was ok,
+# only SELinux was causing the problem).
+# Therefore I disable it (this is a must if you want to install any control panel
+# such as Vesta Control Panel, ISPConfig later on).
+
+# Set true to one of the following variables.
+selinux_enforcing_enabled: false
+selinux_permissive_enabled: false
+selinux_disabled: true
+
+
+# Roles: cli-text-editors
+# Set to true to install the packages.
+nano_enabled: true
+vim_enabled: true
+mc_enabled: true
+emacs_enabled: true
+
+
+# Roles: utilities
+# Set to true to install the following packages.
+wget_enabled: true
+
+
+# Roles: vestacp
+# Config vesta basic details
+vestacp_hostname: development.localhost
+vestacp_email: admin@localhost.com
+vestacp_pass: admin
+
+# Set true to install php7.0 as VestaCP default php.
+vestacp_base_php70: false
+
+# Change default php.ini setting
+vestacp_phpini_expose_php: 'off'
+vestacp_phpini_memory_limit: 512M
+vestacp_phpini_display_errors: 'off'
+vestacp_phpini_upload_max_filesize: 200M
+vestacp_phpini_post_max_size: 50M
+vestacp_phpini_max_input_vars: 3000
+
+# Set true to install mysql5.7 as VestaCP default mysql
+vestacp_base_mysql57: false
+
+
+# Roles: multiple-php-version
+#Set true to install php5.4
+multiple_php_version_php54: true
+# Set a specific port for php5.4
+multiple_php_version_php54_port: 9054
+# create custom vesta backend templates for php5.4
+multiple_php_version_vesta_remi_php54_tpl: true
+
+#Set true to install php5.5
+multiple_php_version_php55: true
+# Set a specific port for php5.5
+multiple_php_version_php55_port: 9055
+# create custom vesta backend templates for php5.5
+multiple_php_version_vesta_remi_php55_tpl: true
+
+#Set true to install php5.6
+multiple_php_version_php56: true
+# Set a specific port for php5.6
+multiple_php_version_php56_port: 9056
+# create custom vesta backend templates for php5.6
+multiple_php_version_vesta_remi_php56_tpl: true
+
+#Set true to install php7.0
+multiple_php_version_php70: false
+# Set a specific port for php7.0
+multiple_php_version_php70_port: 9070
+# create custom vesta backend templates for php7.0
+multiple_php_version_vesta_remi_php70_tpl: false
+
+#Set true to install php7.1
+multiple_php_version_php71: true
+# Set a specific port for php7.1
+multiple_php_version_php71_port: 9071
+# create custom vesta backend templates for php7.1
+multiple_php_version_vesta_remi_php71_tpl: true
+
+
+# Roles: ansible-frontend-development-tools
+# Set the version of Node.js to install ("0.12", "4.x", "5.x", "6.x", "8.x").
+# Version numbers from Nodesource: https://github.com/nodesource/distributions
+nodejs_version: "8.x"
+
+# The user for whom the npm packages will be installed.
+# nodejs_install_npm_user: username
+
+# The directory for global installations.
+npm_config_prefix: "/usr/local/lib/npm"
+
+# Set to true to suppress the UID/GID switching when running package scripts. If set explicitly to false, then installing as a non-root user will fail.
+npm_config_unsafe_perm: "false"
+
+# Define a list of global packages to be installed with NPM.
+nodejs_npm_global_packages: []
+#  # Install a specific version of a package.
+#  - name: jslint
+#    version: 0.9.3
+#  # Install the latest stable release of a package.
+#  - name: node-sass
+#  # This shorthand syntax also works (same as previous example).
+#  - node-sass
+
+# The path of a package.json file used to install packages globally.
+nodejs_package_json_path: ""
+
+yarn_rhel_repo_url: "https://dl.yarnpkg.com/rpm/yarn.repo"
+yarn_rhel_repo_gpg_key_url: "https://dl.yarnpkg.com/rpm/pubkey.gpg"
+yarn_rhel_repofile_path: "/etc/yum.repos.d/yarn.repo"
+
+
+# Roles: ansible-java
+# Java Version (1.6.0,1.7.0,1.8.0)
+java_version: 1.8.0
+
+
+# Roles: ansible-role-jenkins
+# Optional method of pinning a specific version of Jenkins and/or overriding the
+# default Jenkins packaging URL.
+# jenkins_version: "1.644"
+# jenkins_pkg_url: "https://www.example.com"
+
+# Change this to `latest` to update Jenkins if a newer version is available.
+jenkins_package_state: present
+
+jenkins_connection_delay: 5
+jenkins_connection_retries: 60
+jenkins_home: /var/lib/jenkins
+jenkins_hostname: localhost
+jenkins_http_port: 8080
+jenkins_jar_location: /opt/jenkins-cli.jar
+jenkins_url_prefix: ""
+jenkins_java_options: "-Djenkins.install.runSetupWizard=false"
+
+jenkins_plugins: []
+jenkins_plugins_state: present
+jenkins_plugin_updates_expiration: 86400
+jenkins_plugin_timeout: 30
+
+jenkins_admin_username: admin
+jenkins_admin_password: admin
+jenkins_admin_password_file: ""
+jenkins_admin_token: ""
+jenkins_admin_token_file: ""
+
+jenkins_process_user: jenkins
+jenkins_process_group: "{{ jenkins_process_user }}"
+
+jenkins_init_changes:
+  - option: "JENKINS_ARGS"
+    value: "--prefix={{ jenkins_url_prefix }}"
+  - option: "{{ jenkins_java_options_env_var }}"
+    value: "{{ jenkins_java_options }}"

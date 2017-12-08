@@ -1,0 +1,39 @@
+---
+# List of Supported Timezones
+# http://php.net/manual/en/timezones.php
+global_timezone: UTC
+
+#Set true to install php5.4
+multiple_php_version_php54: false
+# Set a specific port for php5.4
+multiple_php_version_php54_port: 9054
+# create custom vesta backend templates for php5.4
+multiple_php_version_vesta_remi-php54-tpl: false
+
+#Set true to install php5.5
+multiple_php_version_php55: false
+# Set a specific port for php5.5
+multiple_php_version_php55_port: 9055
+# create custom vesta backend templates for php5.5
+multiple_php_version_vesta_remi-php55-tpl: false
+
+#Set true to install php5.6
+multiple_php_version_php56: false
+# Set a specific port for php5.6
+multiple_php_version_php56_port: 9056
+# create custom vesta backend templates for php5.6
+multiple_php_version_vesta_remi-php56-tpl: false
+
+#Set true to install php7.0
+multiple_php_version_php70: false
+# Set a specific port for php7.0
+multiple_php_version_php70_port: 9070
+# create custom vesta backend templates for php7.0
+multiple_php_version_vesta_remi-php70-tpl: false
+
+#Set true to install php7.1
+multiple_php_version_php71: false
+# Set a specific port for php7.1
+multiple_php_version_php71_port: 9071
+# create custom vesta backend templates for php7.1
+multiple_php_version_vesta_remi-php71-tpl: false

@@ -1,0 +1,309 @@
+# ---
+# - name: Install php54
+#   yum:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - php54-php-bcmath
+#     - php54-php-cli
+#     - php54-php-common
+#     - php54-php-fpm
+#     - php54-php-gd
+#     - php54-php-intl
+#     - php54-php-json
+#     - php54-php-mbstring
+#     - php54-php-mcrypt
+#     - php54-php-mysqlnd
+#     - php54-php-opcache
+#     - php54-php-pdo
+#     - php54-php-pear
+#     - php54-php-pecl-uploadprogress
+#     - php54-php-pecl-zip
+#     - php54-php-soap
+#     - php54-php-xml
+#     - php54-php-xmlrpc
+#   when: multiple_php_version_php54
+#
+# - name: change php54 port to {{ multiple_php_version_php54_port }}
+#   lineinfile:
+#     path: /opt/remi/php54/root/etc/php-fpm.d/www.conf
+#     regexp: 'listen = 127.0.0.1:'
+#     line: 'listen = 127.0.0.1:{{ multiple_php_version_php54_port }}'
+#   when: multiple_php_version_php54
+#
+# - name: update php54 php.ini timezone
+#   lineinfile:
+#     path: /opt/remi/php54/root/etc/php.ini
+#     regexp: 'date.timezone ='
+#     line: 'date.timezone = "{{ global_timezone }}"'
+#   when: multiple_php_version_php54
+#
+# - name: Enable remi-php54
+#   command: systemctl start php54-php-fpm
+#   when: multiple_php_version_php54
+#
+# - name: Enable remi-php54
+#   command: systemctl enable php54-php-fpm
+#   when: multiple_php_version_php54
+#
+#
+# - name: Install php55
+#   yum:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - php55-php-bcmath
+#     - php55-php-cli
+#     - php55-php-common
+#     - php55-php-fpm
+#     - php55-php-gd
+#     - php55-php-intl
+#     - php55-php-json
+#     - php55-php-mbstring
+#     - php55-php-mcrypt
+#     - php55-php-mysqlnd
+#     - php55-php-opcache
+#     - php55-php-pdo
+#     - php55-php-pear
+#     - php55-php-pecl-uploadprogress
+#     - php55-php-pecl-zip
+#     - php55-php-soap
+#     - php55-php-xml
+#     - php55-php-xmlrpc
+#   when: multiple_php_version_php55
+#
+# - name: change php55 port to {{ multiple_php_version_php55_port }}
+#   lineinfile:
+#     path: /opt/remi/php55/root/etc/php-fpm.d/www.conf
+#     regexp: 'listen = 127.0.0.1:'
+#     line: 'listen = 127.0.0.1:{{ multiple_php_version_php55_port }}'
+#   when: multiple_php_version_php55
+#
+# - name: update php55 php.ini timezone
+#   lineinfile:
+#     path: /opt/remi/php55/root/etc/php.ini
+#     regexp: 'date.timezone ='
+#     line: 'date.timezone = "{{ global_timezone }}"'
+#   when: multiple_php_version_php55
+#
+# - name: Enable remi-php55
+#   command: systemctl start php55-php-fpm
+#   when: multiple_php_version_php55
+#
+# - name: Enable remi-php55
+#   command: systemctl enable php55-php-fpm
+#   when: multiple_php_version_php55
+#
+#
+# - name: Install php56
+#   yum:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - php56-php-bcmath
+#     - php56-php-cli
+#     - php56-php-common
+#     - php56-php-fpm
+#     - php56-php-gd
+#     - php56-php-intl
+#     - php56-php-json
+#     - php56-php-mbstring
+#     - php56-php-mcrypt
+#     - php56-php-mysqlnd
+#     - php56-php-opcache
+#     - php56-php-pdo
+#     - php56-php-pear
+#     - php56-php-pecl-uploadprogress
+#     - php56-php-pecl-zip
+#     - php56-php-soap
+#     - php56-php-xml
+#     - php56-php-xmlrpc
+#   when: multiple_php_version_php56
+#
+# - name: change php56 port to {{ multiple_php_version_php56_port }}
+#   lineinfile:
+#     path: /opt/remi/php56/root/etc/php-fpm.d/www.conf
+#     regexp: 'listen = 127.0.0.1:'
+#     line: 'listen = 127.0.0.1:{{ multiple_php_version_php56_port }}'
+#   when: multiple_php_version_php56
+#
+# - name: update php56 php.ini timezone
+#   lineinfile:
+#     path: /opt/remi/php56/root/etc/php.ini
+#     regexp: 'date.timezone ='
+#     line: 'date.timezone = "{{ global_timezone }}"'
+#   when: multiple_php_version_php56
+#
+# - name: Enable remi-php56
+#   command: systemctl start php56-php-fpm
+#   when: multiple_php_version_php56
+#
+# - name: Enable remi-php56
+#   command: systemctl enable php56-php-fpm
+#   when: multiple_php_version_php56
+#
+#
+# - name: Install php70
+#   yum:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - php70-php-bcmath
+#     - php70-php-cli
+#     - php70-php-common
+#     - php70-php-fpm
+#     - php70-php-gd
+#     - php70-php-intl
+#     - php70-php-json
+#     - php70-php-mbstring
+#     - php70-php-mcrypt
+#     - php70-php-mysqlnd
+#     - php70-php-opcache
+#     - php70-php-pdo
+#     - php70-php-pear
+#     - php70-php-pecl-uploadprogress
+#     - php70-php-pecl-zip
+#     - php70-php-soap
+#     - php70-php-xml
+#     - php70-php-xmlrpc
+#   when: multiple_php_version_php70
+#
+# - name: change php70 port to {{ multiple_php_version_php70_port }}
+#   lineinfile:
+#     path: /etc/opt/remi/php70/php-fpm.d/www.conf
+#     regexp: 'listen = 127.0.0.1:'
+#     line: 'listen = 127.0.0.1:{{ multiple_php_version_php70_port }}'
+#   when: multiple_php_version_php70
+#
+# - name: update php70 php.ini timezone
+#   lineinfile:
+#     path: /etc/opt/remi/php70/php.ini
+#     regexp: 'date.timezone ='
+#     line: 'date.timezone = "{{ global_timezone }}"'
+#   when: multiple_php_version_php70
+#
+# - name: Enable remi-php70
+#   command: systemctl start php70-php-fpm
+#   when: multiple_php_version_php70
+#
+# - name: Enable remi-php70
+#   command: systemctl enable php70-php-fpm
+#   when: multiple_php_version_php70
+#
+#
+# - name: Install php71
+#   yum:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - php71-php-bcmath
+#     - php71-php-cli
+#     - php71-php-common
+#     - php71-php-fpm
+#     - php71-php-gd
+#     - php71-php-intl
+#     - php71-php-json
+#     - php71-php-mbstring
+#     - php71-php-mcrypt
+#     - php71-php-mysqlnd
+#     - php71-php-opcache
+#     - php71-php-pdo
+#     - php71-php-pear
+#     - php71-php-pecl-uploadprogress
+#     - php71-php-pecl-zip
+#     - php71-php-soap
+#     - php71-php-xml
+#     - php71-php-xmlrpc
+#   when: multiple_php_version_php71
+#
+# - name: change php71 port to {{ multiple_php_version_php71_port }}
+#   lineinfile:
+#     path: /etc/opt/remi/php71/php-fpm.d/www.conf
+#     regexp: 'listen = 127.0.0.1:'
+#     line: 'listen = 127.0.0.1:{{ multiple_php_version_php71_port }}'
+#   when: multiple_php_version_php71
+#
+# - name: update php71 php.ini timezone
+#   lineinfile:
+#     path: /etc/opt/remi/php71/php.ini
+#     regexp: 'date.timezone ='
+#     line: 'date.timezone = "{{ global_timezone }}"'
+#   when: multiple_php_version_php71
+#
+# - name: Enable remi-php71
+#   command: systemctl start php71-php-fpm
+#   when: multiple_php_version_php71
+#
+# - name: Enable remi-php71
+#   command: systemctl enable php71-php-fpm
+#   when: multiple_php_version_php71
+
+
+- name: Create VestaCP Backend Template for REMI PHP5.4
+  copy:
+    remote_src: yes
+    src:  /usr/local/vesta/data/templates/web/php-fpm/default.tpl
+    dest: /usr/local/vesta/data/templates/web/php-fpm/remi-php54.tpl
+  when: multiple_php_version_vesta_remi_php54_tpl
+
+- name: VestaCP Backend Template | remi-php54.tpl
+  lineinfile: dest=/usr/local/vesta/data/templates/web/php-fpm/remi-php54.tpl regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+     - { regexp: "listen = 127.0.0.1:%backend_port%", line: "listen = 127.0.0.1:{{ multiple_php_version_php54_port }}" }
+  when: multiple_php_version_vesta_remi_php54_tpl
+
+
+- name: Create VestaCP Backend Template for REMI PHP5.5
+  copy:
+    remote_src: yes
+    src:  /usr/local/vesta/data/templates/web/php-fpm/default.tpl
+    dest: /usr/local/vesta/data/templates/web/php-fpm/remi-php55.tpl
+  when: multiple_php_version_vesta_remi_php55_tpl
+
+- name: VestaCP Backend Template | remi-php55.tpl
+  lineinfile: dest=/usr/local/vesta/data/templates/web/php-fpm/remi-php55.tpl regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+      - { regexp: "listen = 127.0.0.1:%backend_port%", line: "listen = 127.0.0.1:{{ multiple_php_version_php55_port }}" }
+  when: multiple_php_version_vesta_remi_php55_tpl
+
+
+- name: Create VestaCP Backend Template for REMI PHP5.6
+  copy:
+    remote_src: yes
+    src:  /usr/local/vesta/data/templates/web/php-fpm/default.tpl
+    dest: /usr/local/vesta/data/templates/web/php-fpm/remi-php56.tpl
+  when: multiple_php_version_vesta_remi_php56_tpl
+
+- name: VestaCP Backend Template | remi-php56.tpl
+  lineinfile: dest=/usr/local/vesta/data/templates/web/php-fpm/remi-php56.tpl regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+     - { regexp: "listen = 127.0.0.1:%backend_port%", line: "listen = 127.0.0.1:{{ multiple_php_version_php56_port }}" }
+  when: multiple_php_version_vesta_remi_php56_tpl
+
+
+- name: Create VestaCP Backend Template for REMI PHP7.0
+  copy:
+    remote_src: yes
+    src:  /usr/local/vesta/data/templates/web/php-fpm/default.tpl
+    dest: /usr/local/vesta/data/templates/web/php-fpm/remi-php70.tpl
+  when: multiple_php_version_vesta_remi_php70_tpl
+
+- name: VestaCP Backend Template | remi-php70.tpl
+  lineinfile: dest=/usr/local/vesta/data/templates/web/php-fpm/remi-php70.tpl regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+     - { regexp: "listen = 127.0.0.1:%backend_port%", line: "listen = 127.0.0.1:{{ multiple_php_version_php70_port }}" }
+  when: multiple_php_version_vesta_remi_php70_tpl
+
+
+- name: Create VestaCP Backend Template for REMI PHP71
+  copy:
+    remote_src: yes
+    src:  /usr/local/vesta/data/templates/web/php-fpm/default.tpl
+    dest: /usr/local/vesta/data/templates/web/php-fpm/remi-php71.tpl
+  when: multiple_php_version_vesta_remi_php71_tpl
+
+- name: VestaCP Backend Template | remi-php71.tpl
+  lineinfile: dest=/usr/local/vesta/data/templates/web/php-fpm/remi-php54.tpl regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+     - { regexp: "listen = 127.0.0.1:%backend_port%", line: "listen = 127.0.0.1:{{ multiple_php_version_php71_port }}" }
+  when: multiple_php_version_vesta_remi_php71_tpl

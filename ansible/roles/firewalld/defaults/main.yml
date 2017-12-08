@@ -1,0 +1,4 @@
+---
+# FirewallD is a firewall management tool available by default on CentOS 7 servers.
+# Set to true disable, false to enable.
+firewalld_disable: false

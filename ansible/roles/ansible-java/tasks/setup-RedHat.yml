@@ -1,0 +1,12 @@
+---
+- name: Install Java {{ java_version }}
+  yum:
+    name: java-{{ java_version }}-openjdk
+    state: present
+
+- name: Checking Java version
+  command: java -version
+  register: command_result
+
+- name: Java version
+  debug: msg="{{ command_result }}"

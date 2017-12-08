@@ -1,0 +1,8 @@
+---
+# Control Server Playbook
+- hosts: control
+  become: true
+  roles:
+    - ../roles/ntp
+    - ../roles/ansible-java
+    - ../roles/ansible-role-jenkins

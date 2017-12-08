@@ -1,0 +1,29 @@
+---
+# Development Server Playbook
+- hosts: development
+  become: true
+  roles:
+    - ../../roles/ansible-hosts
+  vars:
+    hosts:
+      - { ip: '127.0.0.1', domain: 'development.localhost' }
+      # - { ip: '127.0.0.2', domain: 'foobar2.com' }
+      # - { ip: '127.0.0.3', domain: 'foobar3.com', state: absent }
+    hosts_reset: yes
+
+
+- hosts: development
+  become: true
+  roles:
+    - ../roles/setlocale
+    - ../roles/ntp
+    - ../roles/firewalld
+    - ../roles/selinux
+    - ../roles/repositories
+    - ../roles/development-tools
+    - ../roles/cli-text-editors
+    - ../roles/utilities
+    - ../roles/vestacp
+    - ../roles/multiple-php-versions
+    - ../roles/ansible-frontend-development-tools
+    - ../roles/ansible-php-development-tools

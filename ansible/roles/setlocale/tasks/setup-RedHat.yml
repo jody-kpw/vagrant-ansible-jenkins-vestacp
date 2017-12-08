@@ -1,0 +1,14 @@
+---
+- name: "Fixing setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory"
+  shell: |
+    if ! grep -q "LANG=en_US.utf-8" /etc/environment; then
+       echo LANG=en_US.utf-8 > /etc/environment
+       echo LC_ALL=en_US.utf-8 >> /etc/environment
+    fi
+
+- name: cat /etc/environment
+  command: cat /etc/environment
+  register: command_result
+
+- name: Ansible shell register result
+  debug: msg="{{ command_result.stdout }}"

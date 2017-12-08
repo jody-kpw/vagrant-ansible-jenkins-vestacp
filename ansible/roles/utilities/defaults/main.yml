@@ -1,0 +1,4 @@
+---
+# Roles: utilities
+# Set to true to install the following packages.
+wget_enabled: false

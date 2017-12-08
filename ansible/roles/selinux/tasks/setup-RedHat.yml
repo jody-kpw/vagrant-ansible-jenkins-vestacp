@@ -1,0 +1,19 @@
+---
+# Enable SELinux
+- selinux:
+    policy: targeted
+    state: enforcing
+  register: command_result
+  when: selinux_enforcing_enabled
+
+# Put SELinux in permissive mode, logging actions that would be blocked.
+- selinux:
+    policy: targeted
+    state: permissive
+  register: command_result
+  when: selinux_permissive_enabled
+
+# Disable SELinux
+- selinux:
+    state: disabled
+  when: selinux_disabled

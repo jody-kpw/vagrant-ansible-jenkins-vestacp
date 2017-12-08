@@ -1,0 +1,157 @@
+---
+- name: Install VestaCP Nginx PHP MariaDB
+  get_url: url=http://vestacp.com/pub/vst-install.sh dest=/tmp/vst-install.sh mode=0755
+
+- name: run the installer
+  shell: >
+      yes | bash /tmp/vst-install.sh --nginx yes --phpfpm yes --apache no --named yes --remi yes --vsftpd yes --proftpd no --iptables yes --fail2ban yes --quota no --exim yes --dovecot yes --spamassassin yes --clamav yes --mysql yes --postgresql no --hostname {{ vestacp_hostname }} --email {{ vestacp_email }} --password {{ vestacp_pass }}
+  args:
+    creates: /root/.vestainstalled
+
+- name: Add DEFAULT CHARACTER SET utf8mb4 selection.
+  copy:
+    src:  "{{ role_path }}/files/add_db.html"
+    dest: /usr/local/vesta/web/templates/admin/add_db.html
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Install yum-utils
+  yum:
+    name: yum-utils
+    state: present
+  when: vestacp_base_php70
+
+- name: upgrade all packages
+  yum: name=* state=latest
+  when: vestacp_base_php70
+
+- name: Disable vestacp remi-php55
+  command: yum-config-manager --disable remi-php55
+  when: vestacp_base_php70
+
+- name: Disable vestacp remi-php55-debuginfo
+  command: yum-config-manager --disable remi-php55-debuginfo
+  when: vestacp_base_php70
+
+- name: Disable vestacp remi-php56
+  command: yum-config-manager --disable remi-php56
+  when: vestacp_base_php70
+
+- name: Disable vestacp remi-php56-debuginfo
+  command: yum-config-manager --disable remi-php56-debuginfo
+  when: vestacp_base_php70
+
+# There is current no way to "yum clean all", other than via command: module.
+- name: The yum clean all remove cached packages & headers.
+  command: yum clean all
+  when: vestacp_base_php70
+
+- name: Upgrade all packages
+  yum: name=* state=latest
+  when: vestacp_base_php70
+
+- name: Enable remi-php70
+  command: yum-config-manager --enable remi-php70
+  when: vestacp_base_php70
+
+- name: Upgrade all packages
+  yum: name=* state=latest
+  when: vestacp_base_php70
+
+- name: Install PHP Packages
+  yum: name={{ item }} state=latest
+  with_items:
+    - php-bcmath
+    - php-cli
+    - php-common
+    - php-fpm
+    - php-gd
+    - php-intl
+    - php-json
+    - php-mbstring
+    - php-mcrypt
+    - php-mysqlnd
+    - php-opcache
+    - php-pdo
+    - php-pear
+    - php-pecl-uploadprogress
+    - php-pecl-zip
+    - php-soap
+    - php-xml
+    - php-xmlrpc
+  when: vestacp_base_php70
+
+- name: php-fpm | configure php.ini
+  lineinfile: dest=/etc/php.ini regexp="{{ item.regexp }}" line="{{ item.line }}" backup=yes
+  with_items:
+    - { regexp: "date.timezone", line: "date.timezone = '{{ global_timezone }}'" }
+    - { regexp: "expose_php =", line: "expose_php = {{ vestacp_phpini_expose_php }}" }
+    - { regexp: "memory_limit =", line: "memory_limit = {{ vestacp_phpini_memory_limit }}" }
+    - { regexp: "display_errors =", line: "display_errors = {{ vestacp_phpini_display_errors }}" }
+    - { regexp: "upload_max_filesize =", line: "upload_max_filesize = {{ vestacp_phpini_upload_max_filesize }}" }
+    - { regexp: "post_max_size =", line: "post_max_size = {{ vestacp_phpini_post_max_size }}" }
+    - { regexp: "max_input_vars =", line: "max_input_vars = {{ vestacp_phpini_max_input_vars }}" }
+  when: vestacp_base_php70
+
+- name: php-fpm restart
+  command: systemctl restart php-fpm
+  when: vestacp_base_php70
+
+- name: Remove mariadb completely
+  command: yum remove -y mariadb mariadb-server mariadb mariadb-libs
+  when: vestacp_base_mysql57
+
+- name: The yum clean all remove cached packages & headers.
+  command: yum clean all
+  when: vestacp_base_mysql57
+
+- name: Install MySQL 5.7 repo
+  yum: name=https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm state=present
+  when: vestacp_base_mysql57
+
+- name: Install MySQL 5.7
+  yum:  name=mysql-community-server state=present
+  when: vestacp_base_mysql57
+
+- name: Install python-mysqld packages
+  yum:
+    name: MySQL-python
+    state: present
+  when: vestacp_base_mysql57
+
+- name: Start the MySQL service
+  service: name=mysqld state=started enabled=true
+  when: vestacp_base_mysql57
+
+- name: mysql_upgrade
+  command: mysql_upgrade --user=root --password=admin --force
+  when: vestacp_base_mysql57
+
+- name: phpMyAdmin | config.inc.php
+  lineinfile: dest=/etc/phpMyAdmin/config.inc.php regexp="{{ item.regexp }}" line="{{ item.line }}" backup=yes
+  with_items:
+    - { regexp: "blowfish_secret", line: "$cfg['blowfish_secret'] = '$2a$07$tgQbC7rVB6AqTukkxkSFrOHlKrHWRmz/aEDAHNxXhTQkb0.2fF1zS'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */" }
+  when: vestacp_base_mysql57
+
+- name: Start the MySQL service
+  service: name=mysqld state=restarted enabled=true
+  when: vestacp_base_mysql57
+
+# phpMyAdmin configuration storage is not completely configured
+- name: Copy ysql_completely_configured.sql to tmp folder
+  copy:
+    src:  "{{ role_path }}/files/mysql_completely_configured.sql"
+    dest: /tmp
+  when: vestacp_base_mysql57
+
+- name: Create a new database
+  mysql_db: name=phpmyadmin state=present collation=utf8_general_ci
+  when: vestacp_base_mysql57
+
+- name: Import file.sql similar to mysql -u <username> -p <password> < hostname.sql
+  mysql_db:
+    state: import
+    name: phpmyadmin
+    target: /tmp/mysql_completely_configured.sql
+  when: vestacp_base_mysql57

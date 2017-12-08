@@ -1,0 +1,4 @@
+---
+- import_playbook: playbooks/setup-Control.yml
+- import_playbook: playbooks/setup-Development.yml
+# - import_playbook: playbooks/setup-Operation.yml

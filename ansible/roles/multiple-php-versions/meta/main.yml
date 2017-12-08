@@ -1,0 +1,13 @@
+galaxy_info:
+  author: Jody Wan
+  linkedin: https://www.linkedin.com/in/jodykpw/
+  website: https://www.kpwan.net
+  license: GPLv2
+  min_ansible_version: 2.4
+
+  platforms:
+  - name: Centos
+    versions:
+    - 7
+
+dependencies: []
