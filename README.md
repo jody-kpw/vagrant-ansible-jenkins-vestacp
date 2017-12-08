@@ -61,10 +61,17 @@ https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup
 https://www.gitignore.io
 
 Git clone jodykpw/vagrant-ansible-jenkins-vestacp
-----------------------------
+-------------------------------------------------
 ```
 $ cd ~/Projects
 git clone https://github.com/jody-kpw/vagrant-ansible-jenkins-vestacp.git
+```
+
+**Create SSH folder for ansible server to save ssh key copying over to development server.**
+command line create folder and create manually. 
+```
+$ cd ~/Projects/provision/control
+$ mkdir ssh
 ```
 
 
