@@ -3,6 +3,13 @@
 - hosts: control
   become: true
   roles:
+    - ../roles/setlocale
     - ../roles/ntp
+    - ../roles/firewalld
+    - ../roles/selinux
+    - ../roles/repositories
+    - ../roles/development-tools
+    - ../roles/cli-text-editors
+    - ../roles/utilities
     - ../roles/ansible-java
     - ../roles/ansible-role-jenkins
